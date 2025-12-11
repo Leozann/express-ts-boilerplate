@@ -6,72 +6,79 @@ on:
   pull_request:
     branches: [ main, staging, development ]
 
-
 jobs:
   ci:
-    name: Lint • Typecheck • Test • Build
+    name: Lint - Typecheck - Test - Build
     runs-on: ubuntu-latest
 
     steps:
-      # -------------------------
       # 1. checkout repository
-      # -------------------------
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # -------------------------
-      # 2. setup node + pnpm
-      # -------------------------
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "pnpm"
-
+      # 2. install pnpm
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 10
+          run_install: false
 
-      # -------------------------
-      # 3. cache pnpm store
-      # -------------------------
-      - name: Restore pnpm cache
+      # 3. setup node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 4. restore pnpm store
+      - name: Restore pnpm store
         uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-${{ runner.os }}-
 
-      # -------------------------
-      # 4. install dependencies
-      # -------------------------
+      # 5. install dependencies
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      # -------------------------
-      # 5. lint
-      # -------------------------
+      # 6. Restore ESLint cache
+      - name: Restore ESLint Cache
+        uses: actions/cache@v4
+        with:
+          path: .eslintcache
+          key: eslint-${{ runner.os }}-${{ hashFiles('**/*.ts') }}
+          restore-keys: eslint-${{ runner.os }}-
+
+      # 7. lint (writes .eslintcache)
       - name: Lint
         run: pnpm run lint
 
-      # -------------------------
-      # 6. type check (tsc --noEmit)
-      # -------------------------
-      - name: Type Check
-        run: pnpm exec tsc --noEmit
+      # 8. Restore TS build cache
+      - name: Restore TS Cache
+        uses: actions/cache@v4
+        with:
+          path: .tscache
+          key: tsc-${{ runner.os }}-${{ hashFiles('tsconfig.json') }}
+          restore-keys: tsc-${{ runner.os }}-
 
-      # -------------------------
-      # 7. run vitest
-      # -------------------------
+      # 9. type check (with incremental caching)
+      - name: Type Check
+        run: pnpm exec tsc --noEmit --incremental --tsBuildInfoFile .tscache/tsbuildinfo
+
+      # 10. Restore Vitest cache
+      - name: Restore Vitest Cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.vitest
+          key: vitest-${{ runner.os }}-${{ hashFiles('**/*.ts') }}
+          restore-keys: vitest-${{ runner.os }}-
+
+      # 11. run tests
       - name: Run Tests
         env:
           NODE_ENV: test
         run: pnpm run test
 
-      # -------------------------
-      # 8. build
-      # -------------------------
+      # 12. build
       - name: Build
         run: pnpm run build
