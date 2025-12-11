@@ -1,0 +1,12 @@
+export const userParameters = {
+  UserIdParam: {
+    name: 'id',
+    in: 'path',
+    required: true,
+    description: 'Unique identifier of the user',
+    schema: {
+      type: 'string',
+      format: 'uuid',
+    },
+  },
+}

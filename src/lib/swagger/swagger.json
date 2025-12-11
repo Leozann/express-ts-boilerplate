@@ -1,0 +1,16 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Express Boilerplate",
+    "version": "1.0.0",
+    "description": "Express + TypeScript API documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local Server"
+    }
+  ],
+  "paths": {},
+  "components": {}
+}

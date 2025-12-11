@@ -1,0 +1,46 @@
+services:
+  api:
+    container_name: express-boilerplate
+    build:
+      context: .
+      dockerfile: docker/dev.Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./package.json:/app/package.json
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./src/lib/swagger:/app/src/lib/swagger
+    env_file:
+      - .env.development
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: express-postgres
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin # change as needed
+      POSTGRES_PASSWORD: admin # change as needed
+      POSTGRES_DB: app_express # change as needed
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: express-pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    ports: #localhost:5050 
+      - "5050:80" 
+    environment: # set pgAdmin login credentials
+      PGADMIN_DEFAULT_EMAIL: admin@docker.com  # change as needed
+      PGADMIN_DEFAULT_PASSWORD: lorem_ipsum # change as needed
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:

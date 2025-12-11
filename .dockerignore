@@ -1,0 +1,39 @@
+# Ignore node modules
+node_modules
+npm-debug.log
+pnpm-debug.log
+
+# Build folder
+dist
+build
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+
+# IDE / project files
+.vscode
+.idea
+
+# Git files
+.git
+.gitignore
+
+# Tests (optional — remove if you need tests inside Docker)
+__tests__
+coverage
+
+# Docker itself
+docker-compose.yml
+
+# Misc
+*.md

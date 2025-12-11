@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, staging, development ]
+  pull_request:
+    branches: [ main, staging, development ]
+
+
+jobs:
+  ci:
+    name: Lint • Typecheck • Test • Build
+    runs-on: ubuntu-latest
+
+    steps:
+      # -------------------------
+      # 1. checkout repository
+      # -------------------------
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # -------------------------
+      # 2. setup node + pnpm
+      # -------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      # -------------------------
+      # 3. cache pnpm store
+      # -------------------------
+      - name: Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      # -------------------------
+      # 4. install dependencies
+      # -------------------------
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # -------------------------
+      # 5. lint
+      # -------------------------
+      - name: Lint
+        run: pnpm run lint
+
+      # -------------------------
+      # 6. type check (tsc --noEmit)
+      # -------------------------
+      - name: Type Check
+        run: pnpm exec tsc --noEmit
+
+      # -------------------------
+      # 7. run vitest
+      # -------------------------
+      - name: Run Tests
+        env:
+          NODE_ENV: test
+        run: pnpm run test
+
+      # -------------------------
+      # 8. build
+      # -------------------------
+      - name: Build
+        run: pnpm run build
