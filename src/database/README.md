@@ -1,3 +1,5 @@
+[← Back to Main README](../../README.md)
+
 ## 📘 Database Setup & Management Guide
 
 This project uses Drizzle ORM as the SQL toolkit and migration system. It was chosen because:
@@ -13,7 +15,6 @@ This project uses Drizzle ORM as the SQL toolkit and migration system. It was ch
    Write your table definitions in src/database/schema/.
 
 2. Generate migration files
-<br>
 &nbsp;
 
 ```sh
@@ -21,7 +22,6 @@ This project uses Drizzle ORM as the SQL toolkit and migration system. It was ch
 ```
 
 3. Apply migration to the database
-<br>
 &nbsp;
 
 ```sh
@@ -29,7 +29,6 @@ pnpm db:migrate
 ```
 
 4. Run seeders
-<br>
 &nbsp;
 
 ```sh
@@ -42,7 +41,6 @@ pnpm db:seed --file=20251126T120612.roles.seed.ts
 ### ♻️ Database Reset
 
 When running:
-<br>
 &nbsp;
 
 ```sh
@@ -51,12 +49,12 @@ pnpm db:reset
 This will drop & recreate your schema.
 <br>
 After resetting, always re-run:
-<br>
 &nbsp;
 
 ```sh
 pnpm db:generate
 ```
+&nbsp;
 Otherwise Drizzle will not regenerate fresh SQL migration files
 
 ### 🧱 RDBMS Design (ERD)
@@ -80,24 +78,27 @@ If you prefer visual modeling, you can also recreate or extend this ERD using to
 
 We include pgAdmin so you can view, edit, and browse your database visually, similar to a GUI client.
 
-1. Open pgAdmin:
-http://localhost:5050
-<br>
-Login using credentials from docker-compose.yml:
-Email:    admin@docker.com
-Password: lorem_ipsum
-<br>
-
+1. Open pgAdmin: http://localhost:5050
+   - Login using credentials from docker-compose.yml:</br>
+      - Email:    admin@docker.com
+      - Password: lorem_ipsum
+        
 2. Register a new server
-🔧 Servers → Register → Server
+   - 🔧 Servers → Register → Server
 
 3. Fill the details
+   
 **General tab**
-| Name | express-postgres|
+| Field | Value |
+|-------|-------|
+| Name | express-postgres |
+
 
 **Connection tab**
-| Field	| Value |
-| Host name / Address |	postgres
+| Field | Value |
+|------|-------|
+| Host name / Address | postgres |
 | Port | 5432 |
 | Username | admin |
 | Password | admin |
+

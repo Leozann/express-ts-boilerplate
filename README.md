@@ -184,51 +184,7 @@ Use this command to stop the Docker stack and remove the containers, while keepi
 [Postgres-url]: https://www.postgresql.org
 
 
-
-
 <!-- dummy -->
-
-<!-- Please read this documentation so you can know deep dive exactly this repository have:
-
-this boilerplate already include linter, unit testing, logger, limiter
-please use vscode code editor only and install extensions ESLint and Prettier formatter
-this setup ready-use for production purpose
-this setup ready-use for docker environment, you can also use in local machine environment
-
----
-A modern, production-ready Express + TypeScript boilerplate must separate the app instance from the entry point.
-This pattern gives you:
-Serverless compatibility (export the app without listening)
-Testing-friendly (supertest can import the app without starting a server)
-Cleaner structure (single responsibility: app config vs server startup)
-Better maintainability for large teams (your internal department)
-Good for public boilerplate (industry standard)
----
-
-this repository using design pattern: service repository.
-you can adjust based on needed. for micro-service please use another one
-
-this boilerplate very type-safe for developer which give some benefit.
-include
-ZOD, eslint, husky and commit lint
-
-in this project. no docker? no worries. we understand you. support cross platform (Win+Mac) no more headache
-
-you should know/notice. this boilerplate is end-to-end type-safe for developer.
-which you need to follow the best-practice in SDLC cycle
-
-you cannot push the files into your repo if there is no testing file.
-thats why we provide you example testing files -->
-
-<!-- ## tools:
-
-express
-ts
-vitest
-pnpm
-docker
-drizzle
-pg -->
 
 <!-- contributor:
 leozann
@@ -278,50 +234,3 @@ docker compose logs -f
 
 # kill docker
 docker compose down -->
-
-<!-- # Naming Conventions -->
-
-<!-- make as table -->
-
-<!-- Folder Naming
-✔ Always plural
-✔ Always lowercase
-✔ Hyphens only for multi-word
-
-All foundational (non-domain) modules go inside
-
-for database schema use singular names
-user.schema.ts
-role.schema.ts
-
-If complex domain: user/user.schema.ts
-
-if you need to naming the file index, suffix. avoid index.ts inside many folders -->
-
-<!-- <h1 align="center">
-  <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png" alt="Markdownify" width="200"></a>
-  <br>
-  Markdownify
-  <br>
-</h1> -->
-
-<!-- <h4 align="center">A minimal Markdown Editor desktop app built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>.</h4> -->
-
-
-
-<!-- ## 📁 Folder Structure
-
-```text
-.
-├── src/
-│   ├── config/
-│   ├── modules/
-│   ├── utils/
-│   └── app.ts
-├── tests/
-├── database/
-└── ...
-``` -->
-
-<!-- - [Naming Conventions](#-naming-conventions) -->
