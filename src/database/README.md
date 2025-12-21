@@ -25,16 +25,16 @@ This project uses Drizzle ORM as the SQL toolkit and migration system. It was ch
 &nbsp;
 
 ```sh
-pnpm db:migrate
+   pnpm db:migrate
 ```
 
 4. Run seeders
 &nbsp;
 
 ```sh
-pnpm db:seed --file=roles
-pnpm db:seed --file=users
-pnpm db:seed --file=20251126T120612.roles.seed.ts
+   pnpm db:seed --file=roles
+   pnpm db:seed --file=users
+   pnpm db:seed --file=20251126T120612.roles.seed.ts
 ```
 
 
@@ -44,7 +44,7 @@ When running:
 &nbsp;
 
 ```sh
-pnpm db:reset
+   pnpm db:reset
 ```
 This will drop & recreate your schema.
 <br>
@@ -52,7 +52,7 @@ After resetting, always re-run:
 &nbsp;
 
 ```sh
-pnpm db:generate
+   pnpm db:generate
 ```
 &nbsp;
 Otherwise Drizzle will not regenerate fresh SQL migration files
