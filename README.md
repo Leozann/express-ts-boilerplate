@@ -141,13 +141,12 @@ This boilerplate is fully **Docker-ready**, so you can start developing immediat
 <details>
 <summary>Show Instructions</summary>
 <br>
-This command builds the Docker images and starts all containers, including your application and database
+This command rebuilds images as needed and starts all containers, including your app and database.
 <br>
 &nbsp;
 
 ```sh
   docker compose up --build
-
 ```
 Use this command to stop the Docker stack and remove the containers, while keeping your volumes and data
 &nbsp;
@@ -157,7 +156,11 @@ Use this command to stop the Docker stack and remove the containers, while keepi
 If you just want to build all images with compose but not start containers:
 &nbsp;
 ```sh
+  # build images based on default platform
   docker compose build
+
+  # build for amd64 servers
+  docker compose build --platform linux/amd64  
 ```
 </details>
 
@@ -195,48 +198,3 @@ If you just want to build all images with compose but not start containers:
 <!-- contributor:
 leozann
 farhanlamiran -->
-
-<!-- ## toc (table of content)
-
-- boilerplate information
-- Why this boilerplate?
-- folder structure
-- convention + linting (folder, file, code name)
-- database structure folder (jump into database/readme)
-- boilerplate usage
-- tools installed
-- contributor
-
-tags(?) -->
-
-<!-- ## folder structure -->
-<!-- make it empty -->
-
-<!-- ## clone
-
-how to clone use https
-
-how to clone use ssh
-
-## usage -->
-
-<!-- one script for automation -->
-<!-- run this to make the project ready for running -->
-
-<!-- pnpm run init:setup
-
-then
-
-pnpm dev for development
-pnpm staging for staging
-pnpm prod for production -->
-
-<!--
-
-# no need watch anymore because already have embed from express
-docker compose up --build
-
-docker compose logs -f
-
-# kill docker
-docker compose down -->

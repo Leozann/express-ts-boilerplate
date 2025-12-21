@@ -63,19 +63,13 @@ If you need to:
 
 This ensures consistent behavior across all endpoints and API versions
 
-
 🚫 What to Avoid
-
 - Returning raw objects directly from controllers
 - Manually constructing JSON responses per endpoint
 - Creating inconsistent response formats
 
 ✅ Why This Matters
-
 Standardized API responses make it easier to:
 - Debug requests using shared identifiers (e.g. requestId)
 - Integrate frontend or external consumers
 - Maintain backward compatibility across API versions
-
-
-This keeps the structure **readable, clean, and Markdown-friendly** for your README
