@@ -52,6 +52,7 @@ Built for interns, juniors, and mid-level developers, while remaining clean enou
   - [Initial Setup](#-initial-setup)
   - [Docker Support](#-docker-support)
 - [Architecture Overview](./src/README.md)
+- [API Layer Overview](./src/controllers/README.md)
 - [Database Guide](./src/database/README.md)
 - [Contributors](#-contributors)
 
@@ -152,6 +153,11 @@ Use this command to stop the Docker stack and remove the containers, while keepi
 &nbsp;
 ```sh
   docker compose down
+```
+If you just want to build all images with compose but not start containers:
+&nbsp;
+```sh
+  docker compose build
 ```
 </details>
 
