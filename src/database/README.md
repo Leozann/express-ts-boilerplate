@@ -59,7 +59,7 @@ Otherwise Drizzle will not regenerate fresh SQL migration files
 
 ### 🧱 RDBMS Design (ERD)
 We provide a sample mockup database design to illustrate a clean and scalable relational structure. This example helps guide your development process, especially as your application grows into a larger and more complex system.
-If you prefer visual modeling, you can also recreate or extend this ERD using tools like **Lucidchart**, which makes planning and scaling your database architecture much easier
+If you prefer visual modeling, you can also recreate or extend this ERD using tools like **DBDiagram*, which makes planning and scaling your database architecture much easier
 <br>
 
 ```sh
