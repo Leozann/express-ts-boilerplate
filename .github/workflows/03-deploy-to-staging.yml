@@ -1,0 +1,41 @@
+name: 03 - Deploy to Staging Environment
+
+# run this workflow on pushes to the staging environment
+# typically used in dev, qa, or pre-production urls
+
+on:
+  push:
+    branches:
+      - staging
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  deploy-staging:
+    name: Deploy Staging Environment
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. deploy to staging server via SSH
+      - name: SSH Deploy to Staging
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+
+            echo "🚀 Deploying to staging"
+
+            cd /home/leozan/ops-automation
+
+            echo "📦 Pull latest images (staging tag)"
+            docker pull ghcr.io/${{ github.repository }}:staging
+
+            echo "🔄 Restart staging services"
+            docker compose -f docker-compose.staging.yml up -d
+
+            echo "✅ Staging deployment completed"

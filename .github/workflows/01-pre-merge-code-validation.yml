@@ -1,8 +1,10 @@
-name: CI
+name: 01 - Pre-Merge Code Validation Checks
 
 on:
+  # run validation after direct pushes to the protected branches
   push:
     branches: [ main, staging, development ]
+  # run validation on pull requests targeting the protected branches
   pull_request:
     branches: [ main, staging, development ]
 

@@ -1,0 +1,46 @@
+name: 04 - Deploy to Production Environment
+
+# this workflow is manually triggered to deploy a specific image SHA to production
+# ensure the image SHA has been previously built and pushed to GHCR
+# typically used in live production urls
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_sha:
+        description: "SHA tag to deploy (example: sha-a1b2c3d)"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-production:
+    name: Deploy Production
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. deploy via SSH to production server
+      - name: SSH Deploy Production
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_DEPLOY_HOST }}
+          username: ${{ secrets.PROD_DEPLOY_USER }}
+          key: ${{ secrets.PROD_DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+
+            echo "🚀 Deploying image ${{ inputs.image_sha }} to production"
+
+            cd /home/your-user/your-project
+
+            echo "📥 Pull production images"
+            docker pull ghcr.io/${{ github.repository }}:${{ inputs.image_sha }}
+
+            echo "🔄 Update running containers"
+            IMAGE_TAG=${{ inputs.image_sha }} docker compose -f docker-compose.prod.yml up -d
+
+            echo "🧹 Cleanup unused images"
+            docker image prune -f
+
+            echo "✅ Production deployment completed"

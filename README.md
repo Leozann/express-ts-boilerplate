@@ -54,6 +54,8 @@ Built for interns, juniors, and mid-level developers, while remaining clean enou
 - [Architecture Overview](./src/README.md)
 - [API Layer Overview](./src/controllers/README.md)
 - [Database Guide](./src/database/README.md)
+- [Test Guide](./src/test/README.md)
+- [CI/CD Guide](./.github/README.md)
 - [Contributors](#-contributors)
 
 
