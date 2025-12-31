@@ -1,29 +1,29 @@
-# build image stage
+# ---------- build stage ----------
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-RUN npm install -g pnpm
+RUN corepack enable
 
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-COPY tsconfig.json .
-COPY src ./src
+COPY . .
 RUN pnpm build
 
-# production image stage
+
+# ---------- runtime stage ----------
 FROM node:20-alpine AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm \
-  && pnpm install --only=production --frozen-lockfile
+RUN corepack enable
 
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
+COPY package.json ./
 
 EXPOSE 3000
 

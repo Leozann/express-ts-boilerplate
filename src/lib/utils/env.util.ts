@@ -1,28 +1,45 @@
-// environment variable setup
 import dotenv from 'dotenv'
 import { z } from 'zod'
 
-const envFile = `.env.${process.env.NODE_ENV || 'development'}`
-dotenv.config({ path: envFile })
+// validate node_env early and fail fast if missing or invalid
+const nodeEnvSchema = z.enum(['development', 'staging', 'production', 'test'])
 
+const parsedNodeEnv = nodeEnvSchema.safeParse(process.env.NODE_ENV)
+
+if (!parsedNodeEnv.success) {
+  console.error('invalid or missing node_env')
+  console.error('expected: development | staging | production | test')
+  process.exit(1)
+}
+
+export const NODE_ENV = parsedNodeEnv.data
+
+// load environment file explicitly based on node_env
+dotenv.config({ path: `.env.${NODE_ENV}` })
+
+// validate application environment variables (db and jwt are optional)
 const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'staging', 'production', 'test']).default('development'),
   PORT: z.coerce.number().int().positive().default(3000),
   POSTGRES_URL: z.string().optional(),
   JWT_SECRET: z.string().optional(),
 })
 
-const parsed = envSchema.safeParse(process.env)
+const parsedEnv = envSchema.safeParse(process.env)
 
-if (!parsed.success) {
-  console.error('❌ Invalid .env configuration:', parsed.error.format())
-  throw new Error('Invalid environment variables')
+if (!parsedEnv.success) {
+  console.error('invalid environment variables')
+  console.error(parsedEnv.error.format())
+  process.exit(1)
 }
 
+// export typed env with derived helpers
 export const env = {
-  ...parsed.data,
-  isDev: parsed.data.NODE_ENV === 'development',
-  isTest: parsed.data.NODE_ENV === 'test',
-  isStaging: parsed.data.NODE_ENV === 'staging',
-  isProd: parsed.data.NODE_ENV === 'production',
+  ...parsedEnv.data,
+
+  NODE_ENV,
+
+  isDev: NODE_ENV === 'development',
+  isTest: NODE_ENV === 'test',
+  isStaging: NODE_ENV === 'staging',
+  isProd: NODE_ENV === 'production',
 }

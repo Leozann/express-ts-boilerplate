@@ -1,39 +1,42 @@
-# Ignore node modules
+# dependencies
 node_modules
 npm-debug.log
 pnpm-debug.log
+.pnpm-store
 
-# Build folder
+# build output
 dist
 build
 
-# Environment files
+# environment files
 .env
 .env.*
 !.env.example
 
-# Logs
+# logs
 logs
 *.log
 
-# OS / editor files
+# os / editor
 .DS_Store
 Thumbs.db
-
-# IDE / project files
 .vscode
 .idea
 
-# Git files
+# git
 .git
 .gitignore
 
-# Tests (optional — remove if you need tests inside Docker)
+# tests
 __tests__
 coverage
 
-# Docker itself
-docker-compose.yml
+# tooling
+.turbo
+.cache
 
-# Misc
+# docker config (optional)
+docker-compose*.yml
+
+# docs
 *.md
